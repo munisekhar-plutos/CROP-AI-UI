@@ -5,13 +5,19 @@ import { useRouter } from "next/navigation";
 import { BellIcon, UserCircleIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
+// Define the type for menu items
+type MenuItem = {
+  name: string;
+  path: string;
+};
+
 export default function Navbar() {
-  const [activePage, setActivePage] = useState("Overview"); // Virtual DOM Effect
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [activePage, setActivePage] = useState<string>("Overview"); // Virtual DOM Effect
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const router = useRouter();
 
-  const menuItems = [
-    { name: "Overview", path: "overview" },
+  const menuItems: MenuItem[] = [
+    { name: "Overview", path: "" },
     { name: "ERP", path: "erp" },
     { name: "Bill Payment Requests", path: "bill-payment-requests" },
     { name: "Bill Management", path: "bill-management" },
@@ -20,9 +26,9 @@ export default function Navbar() {
   ];
 
   // Function to handle virtual navigation without reloading
-  const handleNavigation = (item) => {
+  const handleNavigation = (item: MenuItem) => {
     setActivePage(item.name); // Change active state for Virtual DOM effect
-    router.push(`/${item.path}`, { shallow: true }); // Change URL without reload
+    router.push(`/${item.path}`); // Remove { shallow: true }
   };
 
   return (
@@ -93,7 +99,6 @@ export default function Navbar() {
 
       {/* Content Rendering Based on Active Page */}
       <div className="p-6 mt-16">
-        {/* {activePage === "Overview" && <Overview />} */}
         {activePage === "ERP" && <ERP />}
         {activePage === "Bill Payment Requests" && <BillPaymentRequests />}
         {activePage === "Bill Management" && <BillManagement />}
@@ -105,7 +110,6 @@ export default function Navbar() {
 }
 
 // Dummy Components for Page Content Rendering
-// const Overview = () => <div className="text-xl font-semibold">Overview Page Content</div>;
 const ERP = () => <div className="text-xl font-semibold">ERP Page Content</div>;
 const BillPaymentRequests = () => <div className="text-xl font-semibold">Bill Payment Requests Content</div>;
 const BillManagement = () => <div className="text-xl font-semibold">Bill Management Content</div>;

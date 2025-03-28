@@ -1,7 +1,7 @@
-"use client"; // Required for Recharts in Next.js
+"use client"; // Ensure this is a client component
 
+import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
-import { useState } from "react";
 
 const data = [
   { name: "Electricity", value: 29 },
@@ -14,7 +14,11 @@ const data = [
 const COLORS = ["#1E40AF", "#3B82F6", "#60A5FA", "#93C5FD", "#BFDBFE"];
 
 export default function BudgetChart() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<string | null>(null);
+
+  useEffect(() => {
+    setDate(new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" }));
+  }, []);
 
   return (
     <div className="bg-white p-4 border border-gray-300 rounded-xl max-w-sm mx-auto">
@@ -23,12 +27,16 @@ export default function BudgetChart() {
           <h2 className="text-lg font-semibold">Title here</h2>
           <p className="text-gray-500 text-sm">Subtitle goes here</p>
         </div>
-        <button
-          className="border border-gray-300 px-3 py-1 text-sm rounded-md"
-          onClick={() => setDate(new Date())}
-        >
-          {date.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-        </button>
+        {date ? (
+          <button
+            className="border border-gray-300 px-3 py-1 text-sm rounded-md"
+            onClick={() => setDate(new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" }))}
+          >
+            {date}
+          </button>
+        ) : (
+          <p className="text-gray-400">Loading...</p>
+        )}
       </div>
 
       <PieChart width={260} height={250}>
@@ -49,4 +57,3 @@ export default function BudgetChart() {
     </div>
   );
 }
-    
