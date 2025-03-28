@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Billcategories() {
     return (
       <div className="p-4 bg-white rounded-lg border border-gray-200">
@@ -16,7 +18,7 @@ export default function Billcategories() {
               key={index}
               className="flex flex-col items-center p-4 border rounded-lg  bg-gray-50 w-24"
             >
-              <img
+              <Image
                 src="https://storage.googleapis.com/bbps-prod-b01/bbps/service_icon/image1705930551071.svg" 
                 alt="Electricity"
                 className="w-8 h-8 mb-2"
