@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Card from "@/components/Card";
 import Chart from "@/components/Chart";
 import Table from "@/components/Table";
 import BillPaids  from "@/components/BillPaid";

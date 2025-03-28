@@ -6,7 +6,7 @@ interface CardProps {
   }
   
   export default function Card({ title, amount, dueDate, alertType }: CardProps) {
-    const alertColor = alertType === "warning" ? "text-yellow-600" : "text-red-600";
+    // const alertColor = alertType === "warning" ? "text-yellow-600" : "text-red-600";
     return (
       <div className="bg-white p-4 shadow-md rounded-lg">
         <h2 className="text-gray-700 font-semibold">{title}</h2>
