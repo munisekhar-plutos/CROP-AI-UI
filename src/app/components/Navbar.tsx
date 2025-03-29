@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation"; // Import usePathname here
 import { BellIcon, UserCircleIcon, Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
@@ -12,12 +12,12 @@ type MenuItem = {
 };
 
 export default function Navbar() {
-  const [activePage, setActivePage] = useState<string>("Overview"); // Virtual DOM Effect
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const pathname = usePathname(); // Use usePathname to get the current route
   const router = useRouter();
 
   const menuItems: MenuItem[] = [
-    { name: "Overview", path: "" },
+    { name: "Overview", path: "overview" },
     { name: "ERP", path: "erp" },
     { name: "Bill Payment Requests", path: "bill-payment-requests" },
     { name: "Bill Management", path: "bill-management" },
@@ -25,21 +25,19 @@ export default function Navbar() {
     { name: "Funds & Allocations", path: "funds-allocations" },
   ];
 
-  // Function to handle virtual navigation without reloading
   const handleNavigation = (item: MenuItem) => {
-    setActivePage(item.name); // Change active state for Virtual DOM effect
-    router.push(`/${item.path}`); // Remove { shallow: true }
+    router.push(`/${item.path}`);
   };
 
   return (
     <>
-      <nav className="bg-white shadow-sm flex justify-between items-center px-6 py-3 fixed top-0 left-0 w-full z-50">
+      <nav className="bg-white shadow-sm flex justify-between items-center px-6 py-3 fixed top-0 left-0 w-full z-50 mb-1"> {/* Added mb-1 for a small gap */}
         {/* Left: Logo */}
         <div className="flex items-center">
-          <Image 
+          <Image
             src="https://storage.googleapis.com/test132223/test/image-1717136552249-image-1716968400113-Frame%202609485.svg"
             alt="Plutos ONE Logo"
-            width={200} 
+            width={200}
             height={55}
             className="h-12 w-auto cursor-pointer"
             onClick={() => handleNavigation(menuItems[0])}
@@ -52,7 +50,7 @@ export default function Navbar() {
             <li
               key={index}
               className={`cursor-pointer px-3 py-2 rounded-md transition ${
-                activePage === item.name ? "bg-blue-600 text-white" : "hover:text-blue-600"
+                pathname && pathname.includes(item.path) ? "bg-blue-600 text-white" : "hover:text-blue-600"
               }`}
               onClick={() => handleNavigation(item)}
             >
@@ -83,7 +81,7 @@ export default function Navbar() {
               <li
                 key={index}
                 className={`cursor-pointer px-3 py-2 rounded-md transition ${
-                  activePage === item.name ? "bg-blue-600 text-white" : "hover:text-blue-600"
+                  pathname && pathname.includes(item.path) ? "bg-blue-600 text-white" : "hover:text-blue-600"
                 }`}
                 onClick={() => {
                   handleNavigation(item);
@@ -96,22 +94,6 @@ export default function Navbar() {
           </ul>
         </div>
       )}
-
-      {/* Content Rendering Based on Active Page */}
-      <div className="p-6 mt-16">
-        {activePage === "ERP" && <ERP />}
-        {activePage === "Bill Payment Requests" && <BillPaymentRequests />}
-        {activePage === "Bill Management" && <BillManagement />}
-        {activePage === "Manage Groups" && <ManageGroups />}
-        {activePage === "Funds & Allocations" && <FundsAllocations />}
-      </div>
     </>
   );
 }
-
-// Dummy Components for Page Content Rendering
-const ERP = () => <div className="text-xl font-semibold">ERP Page Content</div>;
-const BillPaymentRequests = () => <div className="text-xl font-semibold">Bill Payment Requests Content</div>;
-const BillManagement = () => <div className="text-xl font-semibold">Bill Management Content</div>;
-const ManageGroups = () => <div className="text-xl font-semibold">Manage Groups Content</div>;
-const FundsAllocations = () => <div className="text-xl font-semibold">Funds & Allocations Content</div>;

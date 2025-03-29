@@ -16,13 +16,15 @@ export default function Billcategories() {
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={index}
-              className="flex flex-col items-center p-4 border rounded-lg  bg-gray-50 w-24"
+              className="flex flex-col items-center p-4 border border-gray-300 rounded-lg  bg-gray-50 w-24"
             >
               <Image
-                src="https://storage.googleapis.com/bbps-prod-b01/bbps/service_icon/image1705930551071.svg" 
-                alt="Electricity"
-                className="w-8 h-8 mb-2"
-              />
+              src="https://storage.googleapis.com/bbps-prod-b01/bbps/service_icon/image1705930551071.svg"
+              alt="Electricity"
+              width={32} // Specify width
+              height={32} // Specify height
+              className="w-8 h-8 mb-2"
+            />
               <p className="text-sm font-medium">Electricity</p>
               <p className="text-xs text-gray-500">12%</p>
             </div>
